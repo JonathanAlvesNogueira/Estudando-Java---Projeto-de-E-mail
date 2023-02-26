@@ -12,10 +12,12 @@ public class View {
 		Controller c = new Controller();
 		Scanner scan = new Scanner(System.in);
 		List<String> nomes = new LinkedList<>();
-		
 		Map<String, String> emails = new HashMap<>();
+		
+		
 		int opc = 0;
 		while(opc != 9) {
+			opc = scan.nextInt();
 			switch(opc) {
 			
 			// envia email sem nada
