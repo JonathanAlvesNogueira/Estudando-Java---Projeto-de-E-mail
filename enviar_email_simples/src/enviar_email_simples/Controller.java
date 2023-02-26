@@ -1,68 +1,199 @@
 package enviar_email_simples;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Scanner;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class Controller {
+	
+	public void enviarEmail() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Informe seu email");
+		 // Configuração das propriedades do email, coisas padrões e obrigatorias
+        String host = "smtp.gmail.com"; // host obrigatorio para enviar o email
+        String port = "587";   // porta obrigatoria do email
+        System.out.println("Informe o seu email");
+        String userName = scan.nextLine(); // digite seu email
+        System.out.println("Informe seu email a sua senha segura (necessaria configurar o gmail) ");
+        String password = scan.nextLine(); // Digite sua senha
+        System.out.println("Informe o email da pessoa que receberá o email");
+        String toAddress = scan.nextLine(); // para o Email
+        System.out.println("informe o assunto");
+        String subject = scan.nextLine();; //assunto do email
 
+        // Criação da sessão do email, com as propriedades, chave e valor
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", port);
 
-		public void enviarEmail(){
-			// System.out.println("Você deseja mandar apenas por um email ?");
-			
-			
-			String userName = "";
-			String senha = "";
-			String stmHost = "stmp.example.com";
-			final int smtpPort = 587;
-		      final String fromEmail = "seuemail@dominio.com";
-		      final String toEmail = "destinatario@dominio.com";
+        
+        // cria sessão e valiada o email
+        Session session = Session.getInstance(props,
+          new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(userName, password);
+            }
+          });
 
-		      // Configurações de propriedades do JavaMail
-		      Properties props = new Properties();
-		      props.put("mail.smtp.auth", "true");
-		      props.put("mail.smtp.starttls.enable", "true");
-		      props.put("mail.smtp.host", smtpHost);
-		      props.put("mail.smtp.port", smtpPort);
+        
+        
+        try {
+            // Criação do objeto MimeMessage para representar o email
+            Message message = new MimeMessage(session);  // Aqui, estamos configurando o remetente do email, que é o endereço de email que será usado para enviar a mensagem
+            message.setFrom(new InternetAddress(userName));
+            
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toAddress)); //  Esta linha define o destinatário do email.
+            message.setSubject(subject); //Esta linha define o assunto do email.
 
-		      // Cria uma sessão de email com autenticação
-		      Session session = Session.getInstance(props,
-		         new javax.mail.Authenticator() {
-		            protected PasswordAuthentication getPasswordAuthentication() {
-		               return new PasswordAuthentication(username, password);
-		            }
-		         });
+            // CRIAÇÃO DO CONTEUDO DO EMAIL
+            BodyPart messageBodyPart = new MimeBodyPart();   // Nestas linhas, estamos criando uma parte do corpo do email que será adicionada ao email como texto simples.
+            System.out.println("Digite o texto que deseja enviar");
+            String texto = scan.nextLine();
+            messageBodyPart.setText(texto);
 
-		      try {
-		         // Cria um objeto MimeMessage para representar o email
-		         Message message = new MimeMessage(session);
-		         message.setFrom(new InternetAddress(fromEmail));
-		         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-		         message.setSubject("Assunto do email");
+            Multipart multipart = new MimeMultipart(); //criando um objeto Multipart, que é usado para armazenar as diferentes partes do email (texto, imagem, etc.) 
+            multipart.addBodyPart(messageBodyPart);    // Aqui, estamos adicionando a parte de texto que acabamos de criar.   
 
-		         // Corpo do email
-		         String msg = "Olá,\n\nEste é um exemplo de email enviado usando JavaMail com autenticação SMTP.\n\nAtenciosamente,\nJavaMail";
-		         message.setText(msg);
+            
+         /*
+            
+           // ANEXANDO A IMAGEM
+            messageBodyPart = new MimeBodyPart();               // criando uma nova parte do corpo do email que será usada para enviar a imagem. 
+            String fileName = "Downloads/imagem.jpg";               // caminho da mensagem
+           DataSource source = new FileDataSource(new File(fileName));  // Aqui, estamos criando um objeto FileDataSource para a imagem e adicionando-o como anexo ao email.
+          messageBodyPart.setDataHandler(new DataHandler(source));       
+            messageBodyPart.setFileName("imagem.jpg"); // dando nome para a imagem
+            multipart.addBodyPart(messageBodyPart);    // adicionando ela no multipart
 
-		         // Envia o email
-		         Transport.send(message);
+*/
+ 
+            message.setContent(multipart);              // Adiciona as partes ao conteúdo do email
 
-		         System.out.println("Email enviado com sucesso!");
+            
+           
+            
+            
+            
+            
+            
+            
+            Transport.send(message);    // Envia o email
 
-		      } catch (MessagingException e) {
-		         throw new RuntimeException(e);
-		      }
+            System.out.println("Email enviado com sucesso!");
+            
+
+        } catch (MessagingException e) {
+            System.err.println("Esse foi o erro" + e.getMessage());
+        }
+       
+      
+        
+	}
+	
+	public Map<String, String> gravarEmailMandado(String names) {
+		 String host = "smtp.gmail.com"; // host obrigatorio para enviar o email
+	        String port = "587";   // porta obrigatoria do email
+	        String userName = "SEU-EMAIL"; // digite seu email
+	        String password = "sua senha"; // Digite sua senha
+	        String toAddress = "DESTINATARIO"; // para o Email
+	        String subject = "Teste envio Email"; //assunto do email
+
+	        // Criação da sessão do email, com as propriedades, chave e valor
+	        Properties props = new Properties();
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.starttls.enable", "true");
+	        props.put("mail.smtp.host", host);
+	        props.put("mail.smtp.port", port);
+
+	        
+	        // cria sessão e valiada o email
+	        Session session = Session.getInstance(props,
+	          new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication(userName, password);
+	            }
+	          });
+
+	        
+	        
+	        try {
+	            // Criação do objeto MimeMessage para representar o email
+	            Message message = new MimeMessage(session);  
+	            message.setFrom(new InternetAddress(userName));
+	            
+	            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toAddress)); 
+	            message.setSubject(subject); 
+
+	            // CRIAÇÃO DO CONTEUDO DO EMAIL
+	            BodyPart messageBodyPart = new MimeBodyPart();   
+	            String texto = "Olá,\n\nSegue a imagem em anexo.";
+	            messageBodyPart.setText(texto);
+
+	            Multipart multipart = new MimeMultipart(); 
+	            multipart.addBodyPart(messageBodyPart);      
+
+	            
+	          /*  
+	            
+	           // ANEXANDO A IMAGEM
+	            messageBodyPart = new MimeBodyPart();              
+	            String fileName = "caminho/para/imagem.jpg";               
+	           DataSource source = new FileDataSource(new File(fileName));  
+	          messageBodyPart.setDataHandler(new DataHandler(source));       
+	            messageBodyPart.setFileName("imagem.jpg"); 
+	            multipart.addBodyPart(messageBodyPart);   
+	 
+	            message.setContent(multipart);              
+*/
+	            
+	           
+	            
+	            
+	            
+	            
+	            
+	            Transport.send(message);   
+	            
+
+	            System.out.println("Email enviado com sucesso!");
+	            Map<String, String> mapa = new HashMap<>();
+	            mapa.put(names, texto);
+	            return mapa;
+
+	        } catch (MessagingException e) {
+	            System.err.println("Esse foi o erro" + e.getMessage());
+	            return null;
+	        }
+	       
 		
-			
-			
-			
-			
-			
-			
-			
-		}
 		
 		
 		
 		
 		
-
+	}
+	
+	
+	
+	
+	
 }

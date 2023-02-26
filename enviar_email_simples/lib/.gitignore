@@ -1,0 +1,18 @@
+# Ignore os arquivos gerados pelo Eclipse
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Ignore a pasta target gerada pelo Maven
+target/
+
+# Ignore arquivos de configuração específicos
+application.properties
+application.yml
+
+# Ignore arquivos de logs
+log/
+*.log
