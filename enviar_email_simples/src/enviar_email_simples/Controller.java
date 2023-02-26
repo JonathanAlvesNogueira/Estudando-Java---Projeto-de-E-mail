@@ -25,7 +25,6 @@ public class Controller {
 	
 	public void enviarEmail() {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Informe seu email");
 		 // Configuração das propriedades do email, coisas padrões e obrigatorias
         String host = "smtp.gmail.com"; // host obrigatorio para enviar o email
         String port = "587";   // porta obrigatoria do email
@@ -109,14 +108,25 @@ public class Controller {
         
 	}
 	
-	public Map<String, String> gravarEmailMandado(String names) {
-		 String host = "smtp.gmail.com"; // host obrigatorio para enviar o email
-	        String port = "587";   // porta obrigatoria do email
-	        String userName = "SEU-EMAIL"; // digite seu email
-	        String password = "sua senha"; // Digite sua senha
-	        String toAddress = "DESTINATARIO"; // para o Email
-	        String subject = "Teste envio Email"; //assunto do email
-
+	public String gravarEmailMandado(String names) {
+		Scanner scan = new Scanner(System.in);
+		 // Configuração das propriedades do email, coisas padrões e obrigatorias
+        String host = "smtp.gmail.com"; // host obrigatorio para enviar o email
+        String port = "587";   // porta obrigatoria do email
+        System.out.println("Informe o seu email");
+        String userName = scan.nextLine(); // digite seu email
+        System.out.println("Informe seu email a sua senha segura (necessaria configurar o gmail) ");
+        String password = scan.nextLine(); // Digite sua senha
+        System.out.println("Informe o email da pessoa que receberá o email");
+        String toAddress = scan.nextLine(); // para o Email
+        System.out.println("informe o assunto");
+        String subject = scan.nextLine();; //assunto do email
+		
+		
+		
+		
+		
+		
 	        // Criação da sessão do email, com as propriedades, chave e valor
 	        Properties props = new Properties();
 	        props.put("mail.smtp.auth", "true");
@@ -161,9 +171,9 @@ public class Controller {
 	          messageBodyPart.setDataHandler(new DataHandler(source));       
 	            messageBodyPart.setFileName("imagem.jpg"); 
 	            multipart.addBodyPart(messageBodyPart);   
-	 
+	 */
 	            message.setContent(multipart);              
-*/
+
 	            
 	           
 	            
@@ -175,13 +185,10 @@ public class Controller {
 	            
 
 	            System.out.println("Email enviado com sucesso!");
-	            Map<String, String> mapa = new HashMap<>();
-	            mapa.put(names, texto);
-	            return mapa;
-
+	            return "texto ";
 	        } catch (MessagingException e) {
-	            System.err.println("Esse foi o erro" + e.getMessage());
-	            return null;
+	        	e.printStackTrace();
+	            return "erro";
 	        }
 	       
 		

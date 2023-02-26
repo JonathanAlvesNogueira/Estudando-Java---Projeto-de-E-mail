@@ -35,8 +35,8 @@ public class View {
 				 System.out.println("Qual é o seu nome completo?");
 				    String nome = scan.nextLine();
 				    if (nomes.contains(nome)) {
-				        Map<String, String> emailGravado = c.gravarEmailMandado(nome);
-				        emails.putAll(emailGravado);
+				        String texto = c.gravarEmailMandado(nome);
+				        emails.put(nome, texto);
 				    } else {
 				        System.err.println("Nome não encontrado na lista de clientes");
 				    }
