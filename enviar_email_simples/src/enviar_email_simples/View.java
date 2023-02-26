@@ -17,6 +17,11 @@ public class View {
 		
 		int opc = 0;
 		while(opc != 9) {
+			System.out.println("Informe a opção que deseja selecionar 1- Enviar apenas o email sem cadastro"
+					+  " \n 2 - grava o email e envaia(precisa ter cadatro) "
+					+ "\n 3 - Cadastra o cliente "
+					+ " \n 4- verifica o cliente "
+					+ "\n 5 - verifica e devolve o email gravado");
 			opc = scan.nextInt();
 			switch(opc) {
 			
