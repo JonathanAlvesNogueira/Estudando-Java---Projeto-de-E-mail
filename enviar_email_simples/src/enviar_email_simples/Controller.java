@@ -24,18 +24,21 @@ import javax.mail.internet.MimeMultipart;
 public class Controller {
 	
 	public void enviarEmail() {
-		Scanner scan = new Scanner(System.in);
+		
 		 // Configuração das propriedades do email, coisas padrões e obrigatorias
-        String host = "smtp.gmail.com"; // host obrigatorio para enviar o email
-        String port = "587";   // porta obrigatoria do email
+		Scanner scan = new Scanner(System.in);
+		String host = "smtp.gmail.com"; 
+        String port = "587";   
+        
+        
         System.out.println("Informe o seu email");
-        String userName = scan.nextLine(); // digite seu email
+        String userName = scan.nextLine();
         System.out.println("Informe seu email a sua senha segura (necessaria configurar o gmail) ");
-        String password = scan.nextLine(); // Digite sua senha
+        String password = scan.nextLine(); 
         System.out.println("Informe o email da pessoa que receberá o email");
-        String toAddress = scan.nextLine(); // para o Email
+        String toAddress = scan.nextLine(); 
         System.out.println("informe o assunto");
-        String subject = scan.nextLine();; //assunto do email
+        String subject = scan.nextLine();; 
 
         // Criação da sessão do email, com as propriedades, chave e valor
         Properties props = new Properties();
@@ -71,8 +74,7 @@ public class Controller {
 
             Multipart multipart = new MimeMultipart(); //criando um objeto Multipart, que é usado para armazenar as diferentes partes do email (texto, imagem, etc.) 
             multipart.addBodyPart(messageBodyPart);    // Aqui, estamos adicionando a parte de texto que acabamos de criar.   
-
-            
+ 
          /*
             
            // ANEXANDO A IMAGEM
@@ -86,17 +88,7 @@ public class Controller {
 */
  
             message.setContent(multipart);              // Adiciona as partes ao conteúdo do email
-
-            
-           
-            
-            
-            
-            
-            
-            
             Transport.send(message);    // Envia o email
-
             System.out.println("Email enviado com sucesso!");
             
 
@@ -109,25 +101,25 @@ public class Controller {
 	}
 	
 	public String gravarEmailMandado(String names) {
+		
+		
+		// Configuração das propriedades do email, coisas padrões e obrigatorias
 		Scanner scan = new Scanner(System.in);
-		 // Configuração das propriedades do email, coisas padrões e obrigatorias
         String host = "smtp.gmail.com"; // host obrigatorio para enviar o email
         String port = "587";   // porta obrigatoria do email
+        
+        
         System.out.println("Informe o seu email");
-        String userName = scan.nextLine(); // digite seu email
+        String userName = scan.nextLine();
         System.out.println("Informe a sua senha segura (necessario configurar o gmail) ");
-        String password = scan.nextLine(); // Digite sua senha
+        String password = scan.nextLine(); 
         System.out.println("Informe o email da pessoa que receberá o email");
-        String toAddress = scan.nextLine(); // para o Email
+        String toAddress = scan.nextLine(); 
         System.out.println("informe o assunto");
-        String subject = scan.nextLine();; //assunto do email
+        String subject = scan.nextLine();; 
 		
 		
-		
-		
-		
-		
-	        // Criação da sessão do email, com as propriedades, chave e valor
+	       // Criação da sessão do email, com as propriedades, chave e valor
 	        Properties props = new Properties();
 	        props.put("mail.smtp.auth", "true");
 	        props.put("mail.smtp.starttls.enable", "true");
@@ -161,9 +153,7 @@ public class Controller {
 	            Multipart multipart = new MimeMultipart(); 
 	            multipart.addBodyPart(messageBodyPart);      
 
-	            
 	          /*  
-	            
 	           // ANEXANDO A IMAGEM
 	            messageBodyPart = new MimeBodyPart();              
 	            String fileName = "caminho/para/imagem.jpg";               
@@ -172,18 +162,8 @@ public class Controller {
 	            messageBodyPart.setFileName("imagem.jpg"); 
 	            multipart.addBodyPart(messageBodyPart);   
 	 */
-	            message.setContent(multipart);              
-
-	            
-	           
-	            
-	            
-	            
-	            
-	            
+	            message.setContent(multipart);             
 	            Transport.send(message);   
-	            
-
 	            System.out.println("Email enviado com sucesso!");
 	            return "texto ";
 	        } catch (MessagingException e) {
