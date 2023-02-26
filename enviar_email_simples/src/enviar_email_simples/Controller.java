@@ -115,7 +115,7 @@ public class Controller {
         String port = "587";   // porta obrigatoria do email
         System.out.println("Informe o seu email");
         String userName = scan.nextLine(); // digite seu email
-        System.out.println("Informe seu email a sua senha segura (necessaria configurar o gmail) ");
+        System.out.println("Informe a sua senha segura (necessario configurar o gmail) ");
         String password = scan.nextLine(); // Digite sua senha
         System.out.println("Informe o email da pessoa que receberá o email");
         String toAddress = scan.nextLine(); // para o Email

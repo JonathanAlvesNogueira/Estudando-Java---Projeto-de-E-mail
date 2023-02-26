@@ -67,6 +67,7 @@ public class View {
 				
 			// verifica cliente	
 			case 4: 
+				scan.nextLine();
 				System.out.println("Digite seu nome inteiro para verificar se ja é um usuario");
 				String verificaNome = scan.nextLine();
 				if(emails.containsValue(verificaNome)) {
@@ -78,6 +79,7 @@ public class View {
 				break;
 			// verifica e devolve o email gravado
 			case 5:
+				scan.nextLine();
 				System.out.println("Coloque seu nome para verificar o email gravado");
 				String seuNome = scan.nextLine();
 				if(emails.containsValue(seuNome)) {
