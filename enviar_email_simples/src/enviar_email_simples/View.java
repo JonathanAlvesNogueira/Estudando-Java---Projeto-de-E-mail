@@ -31,21 +31,38 @@ public class View {
 				break;
 			// grava o email que foi enviado
 			case 2: 
-				String qualSeuNome = scan.nextLine();
-				String nome = nomes.contains(qualSeuNome) ? qualSeuNome : "Não tem";
-				if(nome.equals("Não tem")) {
-					System.err.println("Esse nome não esta na lista");
-				}else {
-					emails.putAll(c.gravarEmailMandado(qualSeuNome));
-					break;
-				}
+				scan.nextLine();
+				 System.out.println("Qual é o seu nome completo?");
+				    String nome = scan.nextLine();
+				    if (nomes.contains(nome)) {
+				        Map<String, String> emailGravado = c.gravarEmailMandado(nome);
+				        emails.putAll(emailGravado);
+				    } else {
+				        System.err.println("Nome não encontrado na lista de clientes");
+				    }
+				    // adiciona essa linha para consumir o caractere de nova linha
+				    scan.nextLine();
+				    break;
+
+
+
+
+
 				
 				
 			// cadastra o cliente
 			case 3:
+				scan.nextLine();
 				System.out.println("Escreva seu nome completo");
-				String cadastro = scan.nextLine();
-				nomes.add(cadastro);
+				
+				try {
+					nomes.add(scan.nextLine());					
+				}catch(Exception e) {
+					System.out.println("Mandou mensagem errado " + e.getMessage());
+				}
+				
+				
+				
 				break;
 				
 			// verifica cliente	
@@ -57,6 +74,7 @@ public class View {
 				}else {
 					System.out.println("Não tem");
 				}
+				scan.nextLine();
 				break;
 			// verifica e devolve o email gravado
 			case 5:
@@ -67,6 +85,7 @@ public class View {
 				}else {
 					System.out.println("Você nã gravou seu email");
 				}
+				break;
 				
 				
 				
